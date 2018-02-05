@@ -1,0 +1,56 @@
+@charset "utf-8";
+/* CSS Document */
+*{padding:0;margin: 0;}
+	#user {width: 400px;height: auto;float: left;margin: 50px}
+	#jurisdiction {width: 400px;height: auto;border-radius: 3px;float: left;margin:50px;}
+	
+	.jurisdictionmsg{width: 400px;height: auto;border-radius: 3px;float: left;margin:50px;}
+	.jurisdictionmsg .jurisdictionmsgtop{font-size: 1.2rem;color:#fff;background-color: #2E8965;padding:5px;}
+	.jurisdictionmsg ul{width:100%;height:auto;border-radius: 3px;border:1px solid #2E8965;}
+	.jurisdictionmsg ul li:hover{background-color: #e9edf6;}
+	.jurisdictionmsg ul li>span,input{margin: 15px;}
+	
+	#user .usertop{background-color: #508FC0;font-size: 1.2rem;color:#fff;padding: 5px;}
+	#user .userdown{border:1px solid #508FC0;width: 100%;height: auto;border-radius: 3px;}
+	#jurisdiction .jurisdictiontop{font-size: 1.2rem;color:#fff;background-color: #2E8965;padding:5px;}
+	#jurisdiction .jurisdictiondown{border:1px solid #2E8965;width: 100%;height: auto;border-radius: 3px;}
+	
+/*	树*/
+	
+ul{list-style:none;padding:0;}
+#menu #tree_root{overflow:auto;}
+#menu #tree_root li span{display:block;height:18px;line-height:18px;color:#222;cursor:pointer;}
+	#menu #tree_root li span i{float:right;margin-right: 20px;}
+	
+	
+#menu #tree_root li span.tree2{padding:6px 6px 6px 20px;}
+#menu #tree_root li span.tree3{padding:6px 6px 6px 34px;}
+#menu #tree_root li span.tree4{padding:6px 6px 6px 48px;}
+#menu #tree_root li span.tree5{padding:6px 6px 6px 62px;}
+	#menu #tree_root li span.tree3 i:nth-child(2){color:#259FEC;}
+	#menu #tree_root li span.tree3 i:nth-child(3){color:#f00;}
+#menu li .hover,#menu li span:hover{background-color:#e9edf6;}
+#menu ul{overflow:hidden;}
+#menu ul li b{font-weight:normal;position:relative;padding-left:16px;}
+#menu ul li b:before{display:block;font-size:0;top:5px;left:0;content:"";width:5px;height:5px;border:solid 1px transparent;transform:rotate(45deg);-o-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-webkit-transform:rotate(45deg);position:absolute;}
+#menu ul li .On:before,#menu ul li .On2Off:before{top:3px;border-bottom-color:#999;border-right-color:#999;}
+#menu ul li .Off:before{top:5px;border-top-color:#999;border-right-color:#999;}
+#menu ul li .On2Off:before{transform:rotate(0deg);-o-transform:rotate(0deg);-ms-transform:rotate(0deg);-moz-transform:rotate(0deg);-webkit-transform:rotate(0deg);}
+
+	
+/*	加载动画*/
+	.zong{width: 150px;height: auto;padding: 50px 20px;margin: 0 auto;}
+	.zong .jx{height: 30px;width: 5px;float: left;margin-right: 10px;background-color:#797979;transition: 1s infinite;}	
+	.dong{transform: scaleY(0.4);animation: donghua 1s infinite;}
+	.dong:nth-child(1){}
+	.dong:nth-child(2){animation-delay: 0.1s;}
+	.dong:nth-child(3){animation-delay: 0.2s;}
+	.dong:nth-child(4){animation-delay: 0.3s;}
+	.dong:nth-child(5){animation-delay: 0.4s;}
+	@keyframes donghua{
+		0%,40%,80%,100%{
+			transform: scaleY(0.4)
+		}
+		20%{transform: scaleY(1)}
+	}
+

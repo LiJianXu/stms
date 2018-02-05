@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	default-lazy-init="true"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">  
+
+    <description>Shiro Configuration</description>  
+
+    <!-- Shiro's main business-tier object for web-enabled applications -->  
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">  
+        <property name="realm" ref="myShiroRealm" />  
+        <property name="cacheManager" ref="cacheManager" /> 
+    </bean>  
+    
+    <!-- 項目自定义的Realm -->  
+    <bean id="myShiroRealm" class="com.jtdd.shiro.MyRealm">
+	    <property name="cacheManager" ref="cacheManager" /> 
+	    <property name="credentialsMatcher">
+	    	<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+	    		<property name="hashAlgorithmName" value="MD5"></property>
+	    		<property name="hashIterations" value="1024"></property>
+	    	</bean>
+	    </property> 
+    </bean>  
+    
+   <bean id="systemLogoutFilter" class="com.jtdd.service.SystemLogoutFilter"></bean>
+  <!--    Shiro Filter -->
+<!--     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">  
+        <property name="securityManager" ref="securityManager" />  
+        <property name="loginUrl" value="/login.jsp" />  
+        <property name="successUrl" value="/WEB-INF/security/index.jsp" />  
+        <property name="unauthorizedUrl" value="/login.jsp" /> 
+        <property name="filters">
+            <map>
+                退出过滤器
+                <entry key="logout" value-ref="systemLogoutFilter" />
+            </map>
+        </property> 
+        <property name="filterChainDefinitions">  
+            <value>  
+             	/login.jsp = anon
+            	/404.jsp = anon
+            	/500.jsp = anon
+            	/logout = logout
+            	/login = anon
+            	/css/** = anon
+            	/easyui/** = anon
+            	/fonts/** = anon
+            	/img/** = anon
+            	/js/** = anon
+            	/upload/** = anon 
+            </value>  
+        </property>  
+    </bean>  -->  	
+    <bean id="myPermission" class="com.jtdd.shiro.MyPermisstionFilter"></bean>
+     <bean id="shiroFilter" class="com.jtdd.shiro.ShiroPermissionFactory">
+    <property name="securityManager" ref="securityManager" />  
+        <property name="loginUrl" value="/login.jsp" />  
+        <property name="successUrl" value="/WEB-INF/security/index.jsp" />  
+        <property name="unauthorizedUrl" value="/unauthorized.jsp" /> 
+        <property name="filters">
+            <map>
+                <!--退出过滤器-->
+                <entry key="logout" value-ref="systemLogoutFilter" />
+                <entry key="myPerm" value-ref="myPermission"></entry>
+            </map>
+        </property> 
+        <property name="filterChainDefinitions">  
+            <value>  
+            	/login.jsp = anon
+            	/404.jsp = anon
+            	/500.jsp = anon
+            	/logout = logout
+            	/login = anon
+            	/css/** = anon
+            	/easyui/** = anon
+            	/fonts/** = anon
+            	/img/** = anon
+            	/js/** = anon
+            	/upload/** = anon 
+            </value>  
+        </property>  
+    </bean>
+
+    <!-- 用户授权信息Cache -->  
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />  
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->  
+    <bean id="ShirolifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />  
+
+    <!-- AOP式方法级权限检查 -->  
+    <bean id="ShiroDefaultAdvisorAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"  
+        depends-on="ShirolifecycleBeanPostProcessor">  
+        <property name="proxyTargetClass" value="true" />  
+    </bean>  
+
+    <bean id="ShiroAuthorizationAttributeSourceAdvisor" class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+        <property name="securityManager" ref="securityManager" />  
+    </bean>  
+
+</beans>
